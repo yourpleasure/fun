@@ -16,7 +16,7 @@
 
 #define BUF_SIZE 1024
 #define SERVER_PORT 8008
-#define SERVER_HOST "127.0.0.1"
+#define SERVER_HOST "222.20.102.217"
 #define EPOLL_RUN_TIMEOUT -1
 #define EPOLL_SIZE 10000
 #define MAX_NAME_LEN 256

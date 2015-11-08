@@ -40,12 +40,12 @@ int main()
 	fd = open("/proc/timeget/my_cycles", O_WRONLY);
 	res = write(fd, &cmd, sizeof(unsigned long long));
 	printf("%Lu\n", cmd);
-	CPU_ZERO(&mask);
 
 	cpunum = sysconf(_SC_NPROCESSORS_ONLN);
 	a_thread = (pthread_t *)malloc(cpunum * sizeof(pthread_t));
 	thread_result = (void **)malloc(cpunum * sizeof(void *));
 
+	CPU_ZERO(&mask);
 	for(i = 0; i < cpunum; i++){
 		res = pthread_create(a_thread + i, NULL, thread_fun, (void *)&i);
 		if(res == -1) exit(1);
@@ -84,7 +84,7 @@ void *thread_fun(void *arg)
 
 	CPU_ZERO(&mask);
 	CPU_SET(number, &mask);
-	res = pthread_setaffinity_np(pthread_self(), sizeof(mask), &mask);
+	res = sched_setaffinity(0, sizeof(mask), &mask);
 	if(res != 0) exit(4);
 	mypid = getpid();
 	printf("%s:pid=%d\n", __func__, mypid);
