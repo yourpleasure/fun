@@ -5,7 +5,7 @@ import re
 import random
 import urllib.error
 
-base_url = "http://so.gushiwen.org/view_{0}.aspx".format(random.randint(1,70001))
+base_url = "http://so.gushiwen.org/view_{0}.aspx".format(random.randint(1,72866))
 # base_url = "http://so.gushiwen.org/view_20914.aspx"
 # base_url = "http://so.gushiwen.org/view_5512.aspx"
 try:
