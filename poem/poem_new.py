@@ -28,8 +28,7 @@ while head is not None:
     if head.string is not None:
         real_content.append(head.string.strip())
     head = head.nextSibling
-
-print(title)
+print('\33[5;36m' + title)
 print("[" + dynasty + "]•" + author_name)
 for item in real_content:
     length = len(item)
@@ -42,3 +41,5 @@ for item in real_content:
             print(item[begin: end])
             begin = end
             end += 32
+        print(item[begin:])
+print('\033[0m')
