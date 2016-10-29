@@ -9,7 +9,7 @@ base_url = "http://so.gushiwen.org/view_{0}.aspx".format(random.randint(1,72866)
 # base_url = "http://so.gushiwen.org/view_5512.aspx"
 try:
     f = http.request('GET', base_url, timeout=4.0)
-except urllib3.exceptions.TimeoutError as e:
+except:
     print("timeout: " + base_url)
     exit(-1)
 
