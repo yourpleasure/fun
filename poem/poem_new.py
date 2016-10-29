@@ -15,6 +15,10 @@ except:
 
 soup = BeautifulSoup(f.data, 'lxml')
 poem = soup.find('div', 'shileft')
+
+if poem is None:
+    print(base_url + " format unhandled")
+    eixt(-2)
 title = poem.find('div', 'son1').find('h1').string
 
 content = poem.find('div', 'son2')
