@@ -1,6 +1,7 @@
 # coding: UTF-8
 import urllib3
 import random
+import sys
 from bs4 import BeautifulSoup
 http = urllib3.PoolManager()
 
@@ -11,14 +12,14 @@ try:
     f = http.request('GET', base_url, timeout=4.0)
 except:
     print("timeout: " + base_url)
-    exit(-1)
+    sys.exit(-1)
 
 soup = BeautifulSoup(f.data, 'lxml')
 poem = soup.find('div', 'shileft')
 
 if poem is None:
     print(base_url + " format unhandled")
-    eixt(-2)
+    sys.exit(-2)
 title = poem.find('div', 'son1').find('h1').string
 
 content = poem.find('div', 'son2')
