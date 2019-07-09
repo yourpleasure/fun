@@ -50,7 +50,7 @@ void read_to_first_identifier(const char *temp)
 	while(isalnum(*temp) || (*temp == '_')){
 		*p++ = *temp++;
 	}
-	*p = NUL;
+	*p = NULL;
 
 	printf("identifier is %s, ", string);
 
