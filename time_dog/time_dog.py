@@ -12,13 +12,23 @@ def get_clipboard():
     except subprocess.CalledProcessError:
         return ""
 
-# 发送通知
-def send_notification(title, message):
+# 发送通知并复制到剪贴板
+def send_notification(title, message, original_timestamp=None):
     try:
+        # 发送通知
         subprocess.run([
             'osascript', '-e',
             f'display notification "{message}" with title "{title}"'
         ], check=True)
+        # 提取时间部分
+        time_part = message.split(': ', 1)[1] if ': ' in message else message
+        # 构建复制内容，包含原始时间戳和转换后的时间
+        if original_timestamp:
+            copy_content = f"{original_timestamp} → {time_part}"
+        else:
+            copy_content = time_part
+        # 复制到剪贴板
+        subprocess.run(['pbcopy'], input=copy_content.encode('utf-8'), check=True)
     except subprocess.CalledProcessError:
         pass
 
@@ -59,7 +69,7 @@ def monitor_clipboard():
                 time_str = time.strftime('%Y-%m-%d %H:%M:%S', time_struct)
                 if milliseconds > 0:
                     time_str += f'.{milliseconds:03d}'
-                send_notification('Time Dog', f'Converted time: {time_str}')
+                send_notification('Time Dog', f'Converted time: {time_str}', current_content)
         time.sleep(1)  # 每秒检查一次
 
 # 主函数
@@ -83,7 +93,7 @@ def main():
             time_str = time.strftime('%Y-%m-%d %H:%M:%S', time_struct)
             if milliseconds > 0:
                 time_str += f'.{milliseconds:03d}'
-            send_notification('Time Dog', f'Converted time: {time_str}')
+            send_notification('Time Dog', f'Converted time: {time_str}', input_str)
         else:
             send_notification('Time Dog', 'Invalid timestamp format')
     else:
@@ -94,7 +104,7 @@ def main():
             time_str = time.strftime('%Y-%m-%d %H:%M:%S', time_struct)
             if milliseconds > 0:
                 time_str += f'.{milliseconds:03d}'
-            send_notification('Time Dog', f'Converted time: {time_str}')
+            send_notification('Time Dog', f'Converted time: {time_str}', input_str)
         else:
             send_notification('Time Dog', 'Invalid timestamp format')
 
